@@ -96,8 +96,8 @@ export default function ContactPage() {
             <div className="text-gray-700 text-sm space-y-4 max-h-96 overflow-y-auto">
               <p>
                 By submitting this form, you hereby consent to Urbane Horizon
-                Sdn Bhd ("the Company") and/or any of its related, affiliated,
-                or associated companies (collectively, "Urbane Horizon Group")
+                Sdn Bhd {`("the Company")`} and/or any of its related, affiliated,
+                or associated companies {`(collectively, "Urbane Horizon Group")`}
                 collecting, obtaining, storing, and processing your personal
                 data provided in this form. This is for the purpose of
                 evaluating your feedback, as well as for providing you with
@@ -120,12 +120,12 @@ export default function ContactPage() {
               </p>
               <p>
                 In accordance with the Personal Data Protection Act 2010
-                ("PDPA"), you may at any time request access to, or correction
+                {`("PDPA")`}, you may at any time request access to, or correction
                 of, your personal data held by the Company and/or the Urbane
                 Horizon Group.
               </p>
               <p>
-                For the avoidance of doubt, "personal data" shall have the
+                For the avoidance of doubt, {`"personal data"`} shall have the
                 meaning assigned to it under the PDPA and includes any data you
                 have disclosed in this form.
               </p>
