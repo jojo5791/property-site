@@ -26,7 +26,7 @@ export default function AboutPage() {
       bio: "Sam is passionate about project management and has been instrumental in delivering high-quality developments across Malaysia.",
     },
     {
-      name: "LOW GH",
+      name: "DAVID LOW",
       role: "GENERAL MANAGER",
       image: "/images/LGH.jpg",
       bio: `David Low is a results-driven, team-oriented, and passionate leader with a strong track record of developing and strengthening management teams to maximize company profitability and efficiency. With over 25 years of experience in landed strata and individual title housing development, building construction, and property management, he has consistently demonstrated excellent interpersonal and communication skills, fostering sustainable relationships across all levels.
