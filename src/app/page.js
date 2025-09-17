@@ -8,7 +8,7 @@ export default function Home() {
       {/* Hero Section with background image */}
       <header
         className="w-full h-screen bg-cover bg-center relative flex flex-col justify-center items-center text-center text-white"
-        style={{ backgroundImage: "url('/images/house3.jpg')" }}
+        style={{ backgroundImage: "url('/images/house4.jpg')" }}
       >
         {/* Dark overlay for readability */}
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
