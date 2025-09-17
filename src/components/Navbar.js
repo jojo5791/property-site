@@ -17,7 +17,7 @@ export default function Navbar() {
               src="/images/LOGO-cropped2.svg"
               alt="Logo"
               fill
-              className="object-contain cursor-pointer"
+              className="object-contain cursor-pointer invert"
               unoptimized
             />
           </div>

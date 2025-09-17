@@ -25,7 +25,7 @@ export default function Home() {
       {/* Hero Section */}
       <header
         className="relative h-screen bg-cover bg-center flex flex-col justify-center items-center text-center text-white"
-        style={{ backgroundImage: "url('/images/house4.jpg')" }}
+        style={{ backgroundImage: "url('/images/MainPage_House.jpg')" }}
       >
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40 z-0"></div>
