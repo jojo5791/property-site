@@ -7,9 +7,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="bg-gray-100">
         <Navbar />
- 	<main className="flex-grow pt-8 px-6 max-w-6xl mx-auto">
-        {children}
- 	</main>
+        <main className="flex-grow">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
