@@ -10,7 +10,7 @@ export default function Home() {
       {/* Hero Section with background image */}
       <header
         className="h-screen bg-cover bg-center flex flex-col justify-center items-center text-center text-black"
-        style={{ backgroundImage: "url('/images/bgHouse.jpg')" }}
+        style={{ backgroundImage: "url('/images/house3.jpg')" }}
       >
         <h1 className="text-5xl font-bold drop-shadow-lg">Welcome to Urbane Horizon</h1>
         <p className="mt-4 text-xl drop-shadow-md">Shaping the Skyline of a City</p>
