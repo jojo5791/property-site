@@ -14,12 +14,10 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
-            src="/images/LOGO-cropped2.svg" // ✅ Your original SVG file
+            src="/images/LOGO-cropped2.svg"
             alt="Logo"
-            width={180}
-            height={80}
             priority
-            className="h-auto w-auto cursor-pointer"
+            className="h-8 w-auto md:h-10 lg:h-12 cursor-pointer"
           />
         </Link>
 
