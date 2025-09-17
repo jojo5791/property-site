@@ -10,17 +10,17 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-black border-b border-gray-900">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+        
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <div className="relative h-10 w-28 md:h-14 md:w-36 lg:h-16 lg:w-44">
-            <Image
-              src="/images/LOGO-cropped2.svg"
-              alt="Logo"
-              fill
-              className="object-contain cursor-pointer invert"
-              unoptimized
-            />
-          </div>
+          <Image
+            src="/images/LOGO-cropped2.svg" // ✅ Your original SVG file
+            alt="Logo"
+            width={180}
+            height={80}
+            priority
+            className="h-auto w-auto cursor-pointer"
+          />
         </Link>
 
         {/* Desktop Menu */}
