@@ -24,26 +24,27 @@ export default function Home() {
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40"></div>
 
-        {/* Hero content */}
+        {/* Hero content (title only) */}
         <div className="relative z-10 px-4 -translate-y-40">
           <h1
-            className={`${playfair.className} text-3xl md:text-5xl font-bold`}
+            className={`${playfair.className} text-2xl md:text-4xl font-bold`}
+            style={{ color: "#FFD700" }} // Gold color
           >
-            Welcome to Urbane Horizon
+            Urbane Horizon shaping the skyline of a city
           </h1>
+        </div>
+
+        {/* Bottom tagline + button */}
+        <div className="absolute bottom-10 text-center z-10 px-4">
+          <p className="text-xs md:text-sm text-gray-200 tracking-wide italic mb-3">
+            Explore our latest property developments
+          </p>
 
           <Link href="/projects">
-            <button className="mt-6 bg-yellow-600 text-white px-5 py-2 rounded text-base hover:bg-yellow-700 transition">
+            <button className="bg-yellow-600 text-white px-4 py-2 rounded text-sm md:text-base hover:bg-yellow-700 transition">
               View Projects
             </button>
           </Link>
-        </div>
-
-        {/* Bottom tagline */}
-        <div className="absolute bottom-6 text-center z-10 px-4">
-          <p className="text-xs md:text-sm text-gray-200 tracking-wide italic">
-            Explore our latest property developments
-          </p>
         </div>
       </header>
 
