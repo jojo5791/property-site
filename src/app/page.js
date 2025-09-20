@@ -3,13 +3,21 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <header
-        className="relative h-screen bg-cover bg-center flex flex-col justify-center items-center text-center text-white"
-        style={{ backgroundImage: "url('/images/MainPage_House.jpg')" }}
-      >
+      {/* Hero Section with Video Background */}
+      <header className="relative h-screen flex flex-col justify-center items-center text-center text-white overflow-hidden">
+        
+        {/* Background Video */}
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/videos/NightQuick1.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+        ></video>
+
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40 z-0"></div>
+        <div className="absolute inset-0 bg-black/40"></div>
 
         {/* Hero content */}
         <div className="relative z-10 px-4">
