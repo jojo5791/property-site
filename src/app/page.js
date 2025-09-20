@@ -24,19 +24,24 @@ export default function Home() {
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40"></div>
 
-        {/* Hero content (title only) */}
-        <div className="relative z-10 px-4 -translate-y-40">
+        {/* Hero content (title + subtitle, moved higher) */}
+        <div className="relative z-10 px-4 -translate-y-48">
           <h1
-            className={`${playfair.className} text-2xl md:text-4xl font-bold`}
-            style={{ color: "#FFD700" }} // Gold color
+            className={`${playfair.className} text-3xl md:text-5xl font-bold`}
+            style={{ color: "#FFD700" }} // Gold
           >
-            Urbane Horizon shaping the skyline of a city
+            Urbane Horizon
           </h1>
+          <h2
+            className={`${playfair.className} text-lg md:text-2xl mt-3 tracking-wide`}
+          >
+            Shaping the Skyline of a City
+          </h2>
         </div>
 
         {/* Bottom tagline + button */}
         <div className="absolute bottom-10 text-center z-10 px-4">
-          <p className="text-xs md:text-sm text-gray-200 tracking-wide italic mb-3">
+          <p className="text-sm md:text-base text-gray-200 italic mb-3">
             Explore our latest property developments
           </p>
 
@@ -50,38 +55,26 @@ export default function Home() {
 
       {/* Projects Section */}
       <section id="projects" className="py-20 bg-gray-100 text-center">
-        <h2
-          className={`${playfair.className} text-2xl md:text-3xl font-bold`}
-        >
+        <h2 className={`${playfair.className} text-2xl md:text-3xl font-bold`}>
           Our Projects
         </h2>
-        <p className="mt-3 text-gray-700">
-          Showcase your property projects here.
-        </p>
+        <p className="mt-3 text-gray-700">Showcase your property projects here.</p>
       </section>
 
       {/* About Section */}
       <section id="about" className="py-20 bg-white text-center">
-        <h2
-          className={`${playfair.className} text-2xl md:text-3xl font-bold`}
-        >
+        <h2 className={`${playfair.className} text-2xl md:text-3xl font-bold`}>
           About Us
         </h2>
-        <p className="mt-3 text-gray-700">
-          Tell your story here.
-        </p>
+        <p className="mt-3 text-gray-700">Tell your story here.</p>
       </section>
 
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-gray-100 text-center">
-        <h2
-          className={`${playfair.className} text-2xl md:text-3xl font-bold`}
-        >
+        <h2 className={`${playfair.className} text-2xl md:text-3xl font-bold`}>
           Contact
         </h2>
-        <p className="mt-3 text-gray-700">
-          Get in touch with us here.
-        </p>
+        <p className="mt-3 text-gray-700">Get in touch with us here.</p>
       </section>
     </div>
   );
