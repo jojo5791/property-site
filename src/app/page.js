@@ -9,7 +9,7 @@ export default function Home() {
         {/* Background Video */}
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src="/videos/NightQuick1.mp4"
+          src="/videos/DayQuick1.mp4"
           autoPlay
           muted
           loop
