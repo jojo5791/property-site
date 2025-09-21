@@ -30,7 +30,7 @@ export default function Home() {
             className={`${playfair.className} text-3xl md:text-5xl font-bold`}
             style={{ color: "#FFD700" }} // Gold
           >
-            Urbane Horizon
+            Urbane1 Horizon
           </h1>
           <h2
             className={`${playfair.className} text-lg md:text-2xl mt-3 tracking-wide`}
