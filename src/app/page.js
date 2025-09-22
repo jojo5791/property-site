@@ -47,11 +47,11 @@ export default function Home() {
 
         {/* Hero content (title + subtitle, positioned higher) */}
         <div className="relative z-10 px-4 -translate-y-48">
-        <h1
-	  className={`${openSans.className} text-3xl md:text-5xl font-bold`}
-	  style={{ color: "#FFD700" }} // Gold
+	   <h1
+	  className={`${openSans.className} text-3xl md:text-5xl`}
+	  style={{ color: "#FFD700", letterSpacing: "0.05em" }} // Gold + spacing
 	>
- 	 Urbane Horizon
+	  Urbane Horizon
 	</h1>
 	<h2
 	  className={`${openSans.className} text-lg md:text-2xl mt-3 tracking-wide`}
