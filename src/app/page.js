@@ -10,7 +10,7 @@ export default function Home() {
   const projects = [
     {
       title: "Skyline Residences",
-      image: "/images/project1.jpg", // put your image in public/images
+      image: "/images/project1.jpg", // replace with your actual image
       link: "/projects/skyline",
     },
     {
@@ -42,7 +42,7 @@ export default function Home() {
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40"></div>
 
-        {/* Hero content (title + subtitle, moved higher) */}
+        {/* Hero content (title + subtitle, positioned higher) */}
         <div className="relative z-10 px-4 -translate-y-48">
           <h1
             className={`${playfair.className} text-3xl md:text-5xl font-bold`}
@@ -55,19 +55,6 @@ export default function Home() {
           >
             Shaping the Skyline of a City
           </h2>
-        </div>
-
-        {/* Bottom tagline + button */}
-        <div className="absolute bottom-10 text-center z-10 px-4">
-          <p className="text-sm md:text-base text-gray-200 italic mb-3">
-            Explore our latest property developments
-          </p>
-
-          <Link href="/projects">
-            <button className="bg-yellow-600 text-white px-4 py-2 rounded text-sm md:text-base hover:bg-yellow-700 transition">
-              View Projects
-            </button>
-          </Link>
         </div>
       </header>
 
