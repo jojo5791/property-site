@@ -15,8 +15,9 @@ export default function Home() {
     },
     {
       title: "Urbane Horizon",
-      image: "/images/project2.jpg",
-      link: "/projects/urbane-horizon",
+      image: "/images/MainPage_House.jpg",
+      link: "/projects/1",
+
     },
     {
       title: "Green Living Towers",
