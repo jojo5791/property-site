@@ -49,7 +49,7 @@ export default function Home() {
         <div className="relative z-10 px-4 -translate-y-48">
 	   <h1
 	  className={`${openSans.className} text-3xl md:text-5xl`}
-	  style={{ color: "#FFD700", letterSpacing: "0.05em" }} // Gold + spacing
+	  style={{ color: "#FFFFFF", letterSpacing: "0.05em" }} // Gold + spacing
 	>
 	  Urbane Horizon
 	</h1>
