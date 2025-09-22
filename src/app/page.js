@@ -1,23 +1,25 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Playfair_Display, Poppins, Caveat } from "next/font/google";
+import { Playfair_Display, Poppins } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 
 // Import fonts
-const caveat = Caveat({ subsets: ["latin"], weight: ["400", "700"] });
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"] });
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "600"] });
+const openSans = Open_Sans({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 export default function Home() {
   const projects = [
     {
       title: "Skyline Residences",
-      image: "/images/project1.jpg",
+      image: "/images/project1.jpg", // replace with your actual image
       link: "/projects/skyline",
     },
     {
       title: "Urbane Horizon",
       image: "/images/MainPage_House.jpg",
       link: "/projects/1",
+
     },
     {
       title: "Green Living Towers",
@@ -45,17 +47,17 @@ export default function Home() {
 
         {/* Hero content (title + subtitle, positioned higher) */}
         <div className="relative z-10 px-4 -translate-y-48">
-          <h1
-            className={`${caveat.className} text-4xl md:text-6xl font-bold`}
-            style={{ color: "#FFD700" }} // Gold
-          >
-            Urbane Horizon
-          </h1>
-          <h2
-            className={`${caveat.className} text-xl md:text-3xl mt-3 tracking-wide`}
-          >
-            Shaping the Skyline of a City
-          </h2>
+        <h1
+	  className={`${openSans.className} text-3xl md:text-5xl font-bold`}
+	  style={{ color: "#FFD700" }} // Gold
+	>
+ 	 Urbane Horizon
+	</h1>
+	<h2
+	  className={`${openSans.className} text-lg md:text-2xl mt-3 tracking-wide`}
+	>
+	  Shaping the Skyline of a City
+	</h2>
         </div>
       </header>
 
