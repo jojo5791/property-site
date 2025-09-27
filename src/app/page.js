@@ -9,27 +9,32 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "600"] });
 const openSans = Open_Sans({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 export default function Home() {
- const projects = [
-   {
+const projects = [
+ {
     title: "Urbane Horizon",
     image: "/images/MainPage_House.jpg",
     link: "/projects/1",
     type: "current",
   },
- {
+  {
     title: "Skyline Residences",
     image: "/images/project1.jpg",
     link: "/projects/skyline",
     type: "current",
   },
-  {
+   {
     title: "Green Living Towers",
     image: "/images/project3.jpg",
     link: "/projects/green-living",
     type: "future",
   },
+  {
+    title: "Eco Valley Homes",
+    image: "/images/project4.jpg",
+    link: "/projects/eco-valley",
+    type: "future",
+  },
 ];
-
 
 
   return (
@@ -67,10 +72,6 @@ export default function Home() {
 
 {/* Projects Section */}
 <section id="projects" className="min-h-screen bg-gray-100 py-16 px-6 md:px-12">
-  <h2 className={`${playfair.className} text-3xl md:text-5xl font-bold text-center mb-12 text-gray-800`}>
-    Our Projects
-  </h2>
-
   {/* Current Projects */}
   <div className="mb-16">
     <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 text-left">
