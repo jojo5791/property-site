@@ -10,23 +10,26 @@ const openSans = Open_Sans({ subsets: ["latin"], weight: ["400", "600", "700"] }
 
 export default function Home() {
   const projects = [
-    {
-      title: "Skyline Residences",
-      image: "/images/project1.jpg", // replace with your actual image
-      link: "/projects/skyline",
-    },
-    {
-      title: "Urbane Horizon",
-      image: "/images/MainPage_House.jpg",
-      link: "/projects/1",
+  {
+    title: "Skyline Residences",
+    image: "/images/project1.jpg",
+    link: "/projects/skyline",
+    type: "current",
+  },
+  {
+    title: "Urbane Horizon",
+    image: "/images/MainPage_House.jpg",
+    link: "/projects/1",
+    type: "current",
+  },
+  {
+    title: "Green Living Towers",
+    image: "/images/project3.jpg",
+    link: "/projects/green-living",
+    type: "future",
+  },
+];
 
-    },
-    {
-      title: "Green Living Towers",
-      image: "/images/project3.jpg",
-      link: "/projects/green-living",
-    },
-  ];
 
   return (
     <div className={`min-h-screen ${poppins.className}`}>
@@ -61,40 +64,82 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Projects Section */}
-      <section id="projects" className="min-h-screen bg-gray-100 py-16 px-6 md:px-12">
-        <h2 className={`${playfair.className} text-3xl md:text-5xl font-bold text-center mb-12 text-gray-800`}>
-          Our Projects
-        </h2>
+    {/* Projects Section */}
+<section id="projects" className="min-h-screen bg-gray-100 py-16 px-6 md:px-12">
+  <h2 className={`${playfair.className} text-3xl md:text-5xl font-bold text-center mb-12 text-gray-800`}>
+    Our Projects
+  </h2>
 
-        {/* Project Grid */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-          {projects.map((project, index) => (
-            <Link
-              key={index}
-              href={project.link}
-              className="group relative overflow-hidden rounded-2xl shadow-lg"
-            >
-              <Image
-                src={project.image}
-                alt={project.title}
-                width={600}
-                height={400}
-                className="object-cover w-full h-72 transform transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-500"></div>
-              <div className="absolute bottom-6 left-6 text-white">
-                <h3 className="text-xl md:text-2xl font-semibold mb-2">
-                  {project.title}
-                </h3>
+  {/* Current Projects */}
+  <div className="mb-16">
+    <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 text-center">
+      Current Projects
+    </h3>
+    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+      {projects
+        .filter((p) => p.type === "current")
+        .map((project, index) => (
+          <Link
+            key={index}
+            href={project.link}
+            className="group relative overflow-hidden rounded-2xl shadow-lg"
+          >
+            <Image
+              src={project.image}
+              alt={project.title}
+              width={600}
+              height={400}
+              className="object-cover w-full h-72 transform transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-500"></div>
+            <div className="absolute bottom-6 left-6 text-white">
+              <h3 className="text-xl md:text-2xl font-semibold mb-2">
+                {project.title}
+              </h3>
+              <span className="inline-block bg-white text-black px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-yellow-400 group-hover:text-black transition">
+                View Project →
+              </span>
+            </div>
+          </Link>
+        ))}
+    </div>
+  </div>
+
+  {/* Future Projects */}
+  <div>
+    <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 text-center">
+      Future Projects
+    </h3>
+    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+      {projects
+        .filter((p) => p.type === "future")
+        .map((project, index) => (
+          <Link
+            key={index}
+            href={project.link}
+            className="group relative overflow-hidden rounded-2xl shadow-lg"
+          >
+            <Image
+              src={project.image}
+              alt={project.title}
+              width={600}
+              height={400}
+              className="object-cover w-full h-72 transform transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-500"></div>
+            <div className="absolute bottom-6 left-6 text-white">
+              <h3 className="text-xl md:text-2xl font-semibold mb-2">
+                {project.title}
+              </h3>
                 <span className="inline-block bg-white text-black px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-yellow-400 group-hover:text-black transition">
-                  View Project →
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+                View Project →
+              </span>
+            </div>
+          </Link>
+        ))}
+    </div>
+  </div>
+</section>
 
       {/* About Section */}
       <section id="about" className="py-20 bg-white text-center">
