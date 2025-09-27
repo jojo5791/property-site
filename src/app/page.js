@@ -9,17 +9,17 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "600"] });
 const openSans = Open_Sans({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 export default function Home() {
-  const projects = [
-  {
-    title: "Skyline Residences",
-    image: "/images/project1.jpg",
-    link: "/projects/skyline",
-    type: "current",
-  },
-  {
+ const projects = [
+   {
     title: "Urbane Horizon",
     image: "/images/MainPage_House.jpg",
     link: "/projects/1",
+    type: "current",
+  },
+ {
+    title: "Skyline Residences",
+    image: "/images/project1.jpg",
+    link: "/projects/skyline",
     type: "current",
   },
   {
@@ -29,6 +29,7 @@ export default function Home() {
     type: "future",
   },
 ];
+
 
 
   return (
@@ -64,7 +65,7 @@ export default function Home() {
         </div>
       </header>
 
-    {/* Projects Section */}
+{/* Projects Section */}
 <section id="projects" className="min-h-screen bg-gray-100 py-16 px-6 md:px-12">
   <h2 className={`${playfair.className} text-3xl md:text-5xl font-bold text-center mb-12 text-gray-800`}>
     Our Projects
@@ -72,71 +73,66 @@ export default function Home() {
 
   {/* Current Projects */}
   <div className="mb-16">
-    <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 text-center">
+    <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 text-left">
       Current Projects
     </h3>
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-      {projects
-        .filter((p) => p.type === "current")
-        .map((project, index) => (
-          <Link
-            key={index}
-            href={project.link}
-            className="group relative overflow-hidden rounded-2xl shadow-lg"
-          >
-            <Image
-              src={project.image}
-              alt={project.title}
-              width={600}
-              height={400}
-              className="object-cover w-full h-72 transform transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-500"></div>
-            <div className="absolute bottom-6 left-6 text-white">
-              <h3 className="text-xl md:text-2xl font-semibold mb-2">
-                {project.title}
-              </h3>
-              <span className="inline-block bg-white text-black px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-yellow-400 group-hover:text-black transition">
-                View Project →
-              </span>
-            </div>
-          </Link>
-        ))}
+      {projects.filter((p) => p.type === "current").map((project, index) => (
+        <Link
+          key={index}
+          href={project.link}
+          className="group relative overflow-hidden rounded-2xl shadow-lg"
+        >
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={600}
+            height={400}
+            className="object-cover w-full h-72 transform transition-transform duration-500 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-500"></div>
+          <div className="absolute bottom-6 left-6 text-white">
+            <h3 className="text-xl md:text-2xl font-semibold mb-2">
+              {project.title}
+            </h3>
+            <span className="inline-block bg-white text-black px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-yellow-400 group-hover:text-black transition">
+              View Project →
+            </span>
+          </div>
+        </Link>
+      ))}
     </div>
   </div>
 
   {/* Future Projects */}
   <div>
-    <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 text-center">
+    <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 text-left">
       Future Projects
     </h3>
     <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-      {projects
-        .filter((p) => p.type === "future")
-        .map((project, index) => (
-          <Link
-            key={index}
-            href={project.link}
-            className="group relative overflow-hidden rounded-2xl shadow-lg"
-          >
-            <Image
-              src={project.image}
-              alt={project.title}
-              width={600}
-              height={400}
-              className="object-cover w-full h-72 transform transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-500"></div>
-            <div className="absolute bottom-6 left-6 text-white">
-              <h3 className="text-xl md:text-2xl font-semibold mb-2">
-                {project.title}
-              </h3>
-                <span className="inline-block bg-white text-black px-4 py-2 rounded-lg text-sm font-medium group-hover:bg-yellow-400 group-hover:text-black transition">
-                View Project →
-              </span>
-            </div>
-          </Link>
-        ))}
+      {projects.filter((p) => p.type === "future").map((project, index) => (
+        <div
+          key={index}
+          className="group relative overflow-hidden rounded-2xl shadow-lg"
+        >
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={600}
+            height={400}
+            className="object-cover w-full h-72 opacity-60 blur-[1px] group-hover:opacity-80 group-hover:blur-0 transition duration-500"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-40 transition duration-500"></div>
+          <div className="absolute bottom-6 left-6 text-white">
+            <h3 className="text-xl md:text-2xl font-semibold mb-2">
+              {project.title}
+            </h3>
+            <span className="inline-block bg-yellow-500 text-black px-4 py-2 rounded-lg text-sm font-medium">
+              Coming Soon
+            </span>
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 </section>
