@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Playfair_Display, Poppins, Open_Sans } from "next/font/google";
+import { Playfair_Display, Poppins } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 
 // Import fonts
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"] });
@@ -39,6 +40,7 @@ export default function Home() {
     <div className={`min-h-screen ${poppins.className}`}>
       {/* Hero Section with Video Background */}
       <header className="relative h-screen flex flex-col justify-center items-center text-center text-white overflow-hidden">
+        {/* Background Video */}
         <video
           className="absolute inset-0 w-full h-full object-cover"
           src="/videos/DayQuick1.mp4"
@@ -48,8 +50,10 @@ export default function Home() {
           playsInline
         ></video>
 
+        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40"></div>
 
+        {/* Hero content */}
         <div className="relative z-10 px-4 -translate-y-48">
           <h1
             className={`${openSans.className} text-3xl md:text-5xl`}
@@ -88,8 +92,7 @@ export default function Home() {
                     height={400}
                     className="object-cover w-full h-72 transform transition-transform duration-500 group-hover:scale-110"
                   />
-                  {/* Lighter overlay so image is visible */}
-                  <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition duration-500"></div>
+                  <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-500"></div>
                   <div className="absolute bottom-6 left-6 text-white">
                     <h3 className="text-xl md:text-2xl font-semibold mb-2">
                       {project.title}
@@ -116,20 +119,23 @@ export default function Home() {
                   key={index}
                   className="group relative overflow-hidden rounded-2xl shadow-lg"
                 >
+                  {/* Coming Soon Ribbon */}
+                  <div className="absolute top-4 left-[-40px] bg-yellow-400 text-black font-semibold px-12 py-2 transform -rotate-45 shadow-md z-20">
+                    Coming Soon
+                  </div>
+
                   <Image
                     src={project.image}
                     alt={project.title}
                     width={600}
                     height={400}
-                    className="object-cover w-full h-72 opacity-60 blur-sm group-hover:opacity-80 group-hover:blur-0 transition duration-500"
+                    className="object-cover w-full h-72 opacity-60 blur-[1px] group-hover:opacity-80 group-hover:blur-0 transition duration-500"
                   />
-                  <div className="absolute bottom-6 left-6 text-white">
+                  <div className="absolute inset-0 bg-black bg-opacity-40 transition duration-500"></div>
+                  <div className="absolute bottom-6 left-6 text-white z-10">
                     <h3 className="text-xl md:text-2xl font-semibold mb-2">
                       {project.title}
                     </h3>
-                    <span className="inline-block bg-yellow-500 text-black px-4 py-2 rounded-lg text-sm font-medium">
-                      Coming Soon
-                    </span>
                   </div>
                 </div>
               ))}
