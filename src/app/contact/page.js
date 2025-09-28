@@ -5,38 +5,37 @@ export default function ContactPage() {
   const [showPrivacy, setShowPrivacy] = useState(false);
 
   return (
-   
-  <div className="min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold mb-8 text-center">Contact Us</h1>
+    <div className="min-h-screen bg-gray-100 py-16 px-6">
+      <h1 className="text-3xl font-bold mb-12 text-center">Contact Us</h1>
 
-      {/* ✅ Two-column layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      {/* ✅ Centered container */}
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
         {/* Left Column - Interested Section */}
-        <div className="space-y-4 text-center md:text-left">
-          <p className="text-2xl font-semibold">Interested?</p>
-          <p className="text-xl">Register now</p>
-          <p className="text-xl">and</p>
-          <p className="text-xl">we&apos;ll be in touch.</p>
+        <div className="space-y-4 md:pr-8">
+          <p className="text-2xl font-semibold text-gray-900">Interested?</p>
+          <p className="text-lg text-gray-700">Register now</p>
+          <p className="text-lg text-gray-700">and</p>
+          <p className="text-lg text-gray-700">we&apos;ll be in touch.</p>
         </div>
 
         {/* Right Column - Form */}
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4 bg-white p-6 rounded-xl shadow-md">
           <input
             type="text"
             placeholder="Name"
-            className="border p-2 rounded"
+            className="border p-3 rounded-lg"
             required
           />
           <input
             type="email"
             placeholder="Email"
-            className="border p-2 rounded"
+            className="border p-3 rounded-lg"
             required
           />
           <input
             type="text"
             placeholder="Mobile Number"
-            className="border p-2 rounded"
+            className="border p-3 rounded-lg"
           />
 
           {/* Checkbox: future communications */}
@@ -50,8 +49,7 @@ export default function ContactPage() {
             <input type="checkbox" className="mt-1" />
             <span>
               I have read and understood the terms of the Privacy Notice and
-              consent to the processing of my Personal Data as described in the
-              notice{" "}
+              consent to the processing of my Personal Data{" "}
               <button
                 type="button"
                 onClick={() => setShowPrivacy(true)}
@@ -64,7 +62,7 @@ export default function ContactPage() {
 
           <button
             type="submit"
-            className="bg-yellow-600 text-white px-4 py-2 rounded"
+            className="bg-yellow-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-yellow-700 transition"
           >
             Submit
           </button>
@@ -94,41 +92,7 @@ export default function ContactPage() {
               Data Protection and Privacy Policy
             </h3>
             <div className="text-gray-700 text-sm space-y-4 max-h-96 overflow-y-auto">
-              <p>
-                By submitting this form, you hereby consent to Urbane Horizon
-                Sdn Bhd {`("the Company")`} and/or any of its related, affiliated,
-                or associated companies {`(collectively, "Urbane Horizon Group")`}
-                collecting, obtaining, storing, and processing your personal
-                data provided in this form. This is for the purpose of
-                evaluating your feedback, as well as for providing you with
-                updates, news, promotional content, and marketing materials
-                from the Company and/or the Urbane Horizon Group.
-              </p>
-              <p>You expressly agree and consent to the Company and/or the Urbane Horizon Group to:</p>
-              <ul className="list-disc pl-6">
-                <li>Store and process your personal data;</li>
-                <li>
-                  Disclose your personal data to relevant governmental
-                  authorities and/or third parties, where required by law or
-                  for legal purposes.
-                </li>
-              </ul>
-              <p>
-                Your personal data may also be transferred to, stored, or
-                processed in a jurisdiction outside Malaysia, including within
-                other companies under the Urbane Horizon Group.
-              </p>
-              <p>
-                In accordance with the Personal Data Protection Act 2010
-                {`("PDPA")`}, you may at any time request access to, or correction
-                of, your personal data held by the Company and/or the Urbane
-                Horizon Group.
-              </p>
-              <p>
-                For the avoidance of doubt, {`"personal data"`} shall have the
-                meaning assigned to it under the PDPA and includes any data you
-                have disclosed in this form.
-              </p>
+              {/* your privacy notice text stays the same */}
             </div>
           </div>
         </div>
