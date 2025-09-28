@@ -69,7 +69,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Projects Section */}
+          {/* Projects Section */}
       <section id="projects" className="min-h-screen bg-gray-100 py-16 px-6 md:px-12">
         {/* Current Projects */}
         <div className="mb-16">
@@ -92,7 +92,8 @@ export default function Home() {
                     height={400}
                     className="object-cover w-full h-72 transform transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-60 transition duration-500"></div>
+                  {/* lighter overlay for current projects */}
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition duration-500"></div>
                   <div className="absolute bottom-6 left-6 text-white">
                     <h3 className="text-xl md:text-2xl font-semibold mb-2">
                       {project.title}
@@ -131,7 +132,7 @@ export default function Home() {
                     height={400}
                     className="object-cover w-full h-72 opacity-60 blur-[1px] group-hover:opacity-80 group-hover:blur-0 transition duration-500"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-40 transition duration-500"></div>
+                  <div className="absolute inset-0 bg-black/40 transition duration-500"></div>
                   <div className="absolute bottom-6 left-6 text-white z-10">
                     <h3 className="text-xl md:text-2xl font-semibold mb-2">
                       {project.title}
