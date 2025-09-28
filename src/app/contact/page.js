@@ -11,11 +11,16 @@ export default function ContactPage() {
       {/* ✅ Centered container */}
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
         {/* Left Column - Interested Section */}
-        <div className="space-y-4 md:pr-8">
-          <p className="text-2xl font-semibold text-gray-900">Interested?</p>
-          <p className="text-lg text-gray-700">Register now</p>
-          <p className="text-lg text-gray-700">and</p>
-          <p className="text-lg text-gray-700">we&apos;ll be in touch.</p>
+        <div className="bg-white p-8 rounded-xl shadow-md flex flex-col justify-center relative">
+          {/* Yellow accent bar */}
+          <div className="absolute left-0 top-0 h-full w-2 bg-yellow-500 rounded-l-xl"></div>
+
+          <div className="space-y-4 text-center md:text-left">
+            <p className="text-3xl font-bold text-gray-900">Interested?</p>
+            <p className="text-lg text-gray-700">Register now</p>
+            <p className="text-lg text-gray-700">and</p>
+            <p className="text-lg text-gray-700">we&apos;ll be in touch.</p>
+          </div>
         </div>
 
         {/* Right Column - Form */}
