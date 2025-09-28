@@ -10,7 +10,7 @@ const projects = [
     name: 'Urbane Horizon', 
     location: 'Sitiawan', 
     images: [
-      '/images/MainPage_House.jpg',
+      '/images/house4.jpg',
       '/images/house2.jpg',
       '/images/house3.jpg'
     ] 
