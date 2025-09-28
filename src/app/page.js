@@ -142,10 +142,8 @@ export default function Home() {
                 >
                {/* Coming Soon Ribbon */}
 		<div className="absolute top-6 -left-16 bg-yellow-400 text-black font-bold text-xs md:text-sm px-20 py-2 transform -rotate-45 shadow-md z-20 tracking-wide whitespace-nowrap">
-  Coming Soon
-</div>
-
-
+ 			Coming Soon
+		</div>
                   <Image
                     src={project.image}
                     alt={project.alt}
