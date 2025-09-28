@@ -84,9 +84,10 @@ export default function ProjectsPage() {
           {projects.filter((p) => p.type === 'future').map((project) => (
             <div key={project.id} className="group relative overflow-hidden rounded-2xl shadow-lg">
              {/* Ribbon */}
-		<div className="absolute top-6 -left-16 bg-yellow-400 text-black font-bold text-xs md:text-sm px-20 py-2 transform -rotate-45 shadow-md z-20 tracking-wide whitespace-nowrap">
-  		Coming Soon
+		<div className="absolute top-6 -left-12 md:-left-16 bg-yellow-400 text-black font-bold text-xs md:text-sm px-12 md:px-20 py-2 transform -rotate-45 shadow-md z-20 tracking-wide whitespace-nowrap">
+ 		 Coming Soon
 		</div>
+
               <Image
                 src={project.images[0]}
                 alt={project.name}
