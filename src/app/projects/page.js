@@ -83,10 +83,10 @@ export default function ProjectsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {projects.filter((p) => p.type === 'future').map((project) => (
             <div key={project.id} className="group relative overflow-hidden rounded-2xl shadow-lg">
-              {/* Ribbon */}
-              <div className="absolute top-4 left-[-35px] bg-yellow-400 text-black font-semibold px-12 py-2 transform -rotate-45 shadow-md z-20">
-                Coming Soon
-              </div>
+             {/* Ribbon */}
+		<div className="absolute top-4 left-[-25px] bg-yellow-400 text-black font-semibold px-8 py-1 text-sm transform -rotate-45 shadow-md z-20 whitespace-nowrap">
+		  Coming Soon
+		</div>
               <Image
                 src={project.images[0]}
                 alt={project.name}
