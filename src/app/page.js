@@ -14,7 +14,7 @@ export default function Home() {
   const projects = [
     {
       title: "Urbane Horizon",
-      image: "/images/MainPage_House.jpg",
+      image: "/images/house4.jpg",
       link: "/projects/1",
       type: "current",
       alt: "Modern housing project Urbane Horizon",
