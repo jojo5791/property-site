@@ -125,10 +125,10 @@ export default function Home() {
                   key={index}
                   className="group relative overflow-hidden rounded-2xl shadow-lg"
                 >
-                  {/* Coming Soon Ribbon */}
-                  <div className="absolute top-4 left-[-40px] bg-yellow-400 text-black font-semibold px-12 py-2 transform -rotate-45 shadow-md z-20">
-                    Coming Soon
-                  </div>
+               {/* Coming Soon Ribbon */}
+		<div className="absolute top-4 left-[-60px] bg-yellow-400 text-black font-semibold px-16 py-2 transform -rotate-45 shadow-md z-20 whitespace-nowrap">
+		  Coming Soon
+		</div>
 
                   <Image
                     src={project.image}
