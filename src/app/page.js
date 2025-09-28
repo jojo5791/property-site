@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Playfair_Display, Poppins } from "next/font/google";
-import { Open_Sans } from "next/font/google";
+import { Playfair_Display, Poppins, Open_Sans } from "next/font/google";
 
 // Import fonts
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"] });
@@ -15,24 +14,28 @@ export default function Home() {
       image: "/images/MainPage_House.jpg",
       link: "/projects/1",
       type: "current",
+      alt: "Modern housing project Urbane Horizon",
     },
     {
       title: "Skyline Residences",
       image: "/images/project1.jpg",
       link: "/projects/skyline",
       type: "current",
+      alt: "High-rise Skyline Residences project",
     },
     {
       title: "Green Living Towers",
       image: "/images/project3.jpg",
       link: "/projects/green-living",
       type: "future",
+      alt: "Eco-friendly Green Living Towers",
     },
     {
       title: "Eco Valley Homes",
       image: "/images/project4.jpg",
       link: "/projects/eco-valley",
       type: "future",
+      alt: "Upcoming Eco Valley Homes project",
     },
   ];
 
@@ -48,13 +51,14 @@ export default function Home() {
           muted
           loop
           playsInline
+          poster="/images/MainPage_House.jpg" // fallback image for performance
         ></video>
 
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40"></div>
 
         {/* Hero content */}
-        <div className="relative z-10 px-4 -translate-y-48">
+        <div className="relative z-10 px-4 -translate-y-36 sm:-translate-y-48">
           <h1
             className={`${openSans.className} text-3xl md:text-5xl`}
             style={{ color: "#FFFFFF", letterSpacing: "0.05em" }}
@@ -69,14 +73,14 @@ export default function Home() {
         </div>
       </header>
 
-          {/* Projects Section */}
+      {/* Projects Section */}
       <section id="projects" className="min-h-screen bg-gray-100 py-16 px-6 md:px-12">
         {/* Current Projects */}
         <div className="mb-16">
           <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 text-left">
             Current Projects
           </h3>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
             {projects
               .filter((p) => p.type === "current")
               .map((project, index) => (
@@ -87,9 +91,10 @@ export default function Home() {
                 >
                   <Image
                     src={project.image}
-                    alt={project.title}
+                    alt={project.alt}
                     width={600}
                     height={400}
+                    priority={index === 0} // load first image faster
                     className="object-cover w-full h-72 transform transition-transform duration-500 group-hover:scale-110"
                   />
                   {/* lighter overlay for current projects */}
@@ -112,7 +117,7 @@ export default function Home() {
           <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 text-left">
             Future Projects
           </h3>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
             {projects
               .filter((p) => p.type === "future")
               .map((project, index) => (
@@ -127,9 +132,10 @@ export default function Home() {
 
                   <Image
                     src={project.image}
-                    alt={project.title}
+                    alt={project.alt}
                     width={600}
                     height={400}
+                    loading="lazy"
                     className="object-cover w-full h-72 opacity-60 blur-[1px] group-hover:opacity-80 group-hover:blur-0 transition duration-500"
                   />
                   <div className="absolute inset-0 bg-black/40 transition duration-500"></div>
