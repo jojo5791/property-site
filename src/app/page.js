@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Playfair_Display, Poppins, Open_Sans } from "next/font/google";
+import { motion } from "framer-motion";
 
 // Import fonts
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "700"] });
@@ -56,21 +57,33 @@ export default function Home() {
 
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/40"></div>
-
-        {/* Hero content */}
-        <div className="relative z-10 px-4 -translate-y-36 sm:-translate-y-48">
-          <h1
-            className={`${openSans.className} text-3xl md:text-5xl`}
-            style={{ color: "#FFFFFF", letterSpacing: "0.05em" }}
-          >
-            Urbane Horizon
-          </h1>
-          <h2
-            className={`${openSans.className} text-lg md:text-2xl mt-3 tracking-wide`}
-          >
-            Shaping the Skyline of a City
-          </h2>
-        </div>
+	
+	{/* Hero content */}
+	<div className="relative z-10 px-4 -translate-y-48 text-center">
+	  <motion.h1
+	    initial={{ opacity: 0, y: 30 }}
+	    animate={{ opacity: 1, y: 0 }}
+	    transition={{ duration: 1, ease: "easeOut" }}
+	    className={`${playfair.className} text-4xl md:text-6xl font-bold`}
+	    style={{
+ 	     background: "linear-gradient(90deg, #FFD700, #FFA500)", // gold gradient
+ 	     WebkitBackgroundClip: "text",
+ 	     WebkitTextFillColor: "transparent",
+  	    letterSpacing: "0.05em",
+ 	   }}
+	  >
+	    Urbane Horizon
+	  </motion.h1>
+	  <motion.h2
+	    initial={{ opacity: 0, y: 20 }}
+	    animate={{ opacity: 1, y: 0 }}
+	    transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+	    className={`${poppins.className} text-lg md:text-2xl mt-4 tracking-widest`}
+	    style={{ color: "#E5E7EB", fontWeight: 300 }}
+	  >
+	    Shaping the Skyline of a City
+	  </motion.h2>
+	</div>
       </header>
 
       {/* Projects Section */}
