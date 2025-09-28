@@ -141,9 +141,10 @@ export default function Home() {
                   className="group relative overflow-hidden rounded-2xl shadow-lg"
                 >
                {/* Coming Soon Ribbon */}
-		<div className="absolute top-4 -left-10 bg-yellow-400 text-black font-bold text-sm md:text-base px-16 py-2 transform -rotate-45 shadow-md z-20 whitespace-nowrap">
+		<div className="absolute top-4 -left-12 bg-yellow-400 text-black font-bold text-xs md:text-sm px-20 py-2 transform -rotate-45 shadow-md z-20 tracking-wide whitespace-nowrap">
 		  Coming Soon
 		</div>
+
                   <Image
                     src={project.image}
                     alt={project.alt}
