@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Playfair_Display, Poppins, Open_Sans } from "next/font/google";
