@@ -10,12 +10,9 @@ export default function ContactPage() {
 
       {/* ✅ Centered container */}
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-        {/* Left Column - Highlight Section */}
+        {/* Left Column - Message Section */}
         <div className="bg-yellow-500 p-8 rounded-xl shadow-md flex flex-col justify-center">
-          <p className="text-4xl font-extrabold text-black mb-4 tracking-wide">
-            Find Out More
-          </p>
-          <p className="text-lg text-black/80 leading-relaxed">
+          <p className="text-2xl font-bold text-black leading-relaxed">
             Like what you see? <br />
             Drop your details here.
           </p>
