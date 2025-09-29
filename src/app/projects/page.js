@@ -51,7 +51,7 @@ export default function ProjectsPage() {
       {/* Current Projects */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-8 text-left">
-          Current Projects
+          Coming Soon
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {projects.filter((p) => p.type === 'current').map((project) => (
@@ -85,7 +85,7 @@ export default function ProjectsPage() {
             <div key={project.id} className="group relative overflow-hidden rounded-2xl shadow-lg">
              {/* Ribbon */}
 		<div className="absolute top-6 -left-12 md:-left-16 bg-yellow-400 text-black font-bold text-xs md:text-sm px-12 md:px-20 py-2 transform -rotate-45 shadow-md z-20 tracking-wide whitespace-nowrap">
- 		 Coming Soon
+ 		 Future
 		</div>
 
               <Image
