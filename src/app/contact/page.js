@@ -10,12 +10,14 @@ export default function ContactPage() {
 
       {/* ✅ Centered container */}
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-        {/* Left Column - Interested Section */}
+        {/* Left Column - Highlight Section */}
         <div className="bg-yellow-500 p-8 rounded-xl shadow-md flex flex-col justify-center">
-          <p className="text-3xl font-bold text-black mb-4">Interested?</p>
-          <p className="text-lg text-black leading-relaxed">
-            Register now and <br />
-            we&apos;ll be in touch soon.
+          <p className="text-4xl font-extrabold text-black mb-4 tracking-wide">
+            Find Out More
+          </p>
+          <p className="text-lg text-black/80 leading-relaxed">
+            Like what you see? <br />
+            Drop your details here.
           </p>
         </div>
 
