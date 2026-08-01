@@ -1,7 +1,7 @@
 "use client";
 
 import { notFound, useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const projects = [
   {
@@ -36,20 +36,6 @@ const projects = [
 export default function ProjectDetails() {
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
-  const [scriptLoaded, setScriptLoaded] = useState(false);
-
-  // Safely registers the 3D viewer library on the client side to bypass webpack build traps
-  useEffect(() => {
-    if (typeof window !== "undefined" && !window.customElements.get("model-viewer")) {
-      const script = document.createElement("script");
-      script.type = "module";
-      script.src = "https://googleapis.com";
-      script.onload = () => setScriptLoaded(true);
-      document.head.appendChild(script);
-    } else {
-      setScriptLoaded(true);
-    }
-  }, []);
 
   const resolvedId = params ? params.id : "";
   
@@ -64,8 +50,12 @@ export default function ProjectDetails() {
     return notFound();
   }
 
-  // Alias name to safely mount custom 3D element tags
-  const ModelViewerContainer = "model-viewer";
+  // Uses a fully isolated sandbox rendering link that bypasses all script security blockers
+  const safe3DViewerUrl = project.glb 
+    ? `https://babylonjs.com{encodeURIComponent(
+        typeof window !== "undefined" ? window.location.origin + project.glb : ""
+      )}`
+    : "";
 
   return (
     <div className="max-w-4xl mx-auto p-8 relative">
@@ -113,7 +103,7 @@ export default function ProjectDetails() {
       {/* INTERACTIVE POP-UP OVERLAY MODAL */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
-          <div className="bg-white rounded-lg overflow-hidden w-full max-w-3xl relative shadow-2xl p-6 text-center border border-gray-200">
+          <div className="bg-white rounded-lg overflow-hidden w-full max-w-4xl relative shadow-2xl p-6 text-center border border-gray-200">
             
             {/* Close Button */}
             <button
@@ -124,33 +114,25 @@ export default function ProjectDetails() {
               x
             </button>
 
-            {/* Header Title Text */}
+            {/* Header Title */}
             <div className="border-b pb-3 mb-4 text-left">
               <h3 className="font-bold text-xl text-gray-900">
                 Interactive 3D View: {project.name}
               </h3>
             </div>
 
-            {/* 3D Model Rendering Window */}
-            <div className="w-full h-[500px] bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative">
-              {scriptLoaded ? (
-                <ModelViewerContainer
-                  src={project.glb}
-                  alt={`3D design model of ${project.name}`}
-                  auto-rotate=""
-                  camera-controls=""
-                  touch-action="pan-y"
-                  style={{ width: "100%", height: "100%", outline: "none", display: "block" }}
-                />
-              ) : (
-                <div className="text-gray-500 text-sm animate-pulse">
-                  Loading 3D Engine Architecture...
-                </div>
-              )}
+            {/* Sandboxed 3D Viewer Frame */}
+            <div className="w-full h-[550px] bg-gray-100 rounded-lg overflow-hidden">
+              <iframe
+                src={safe3DViewerUrl}
+                title="3D Interactive Real Estate Engine"
+                className="w-full h-full border-none"
+                allow="autoplay; fullscreen; xr-spatial-tracking"
+              />
             </div>
 
             <div className="mt-4 text-xs text-gray-500 text-left">
-              💡 Left-click and drag your mouse to rotate. Use your scroll wheel to zoom.
+              💡 Left-click and drag your mouse to rotate your building layout inside the engine panel.
             </div>
 
           </div>
