@@ -1,7 +1,7 @@
 "use client"; 
 
 import { notFound, useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const projects = [
   { 
@@ -36,6 +36,14 @@ const projects = [
 export default function ProjectDetails() {
   const params = useParams(); 
   const [isOpen, setIsOpen] = useState(false);
+  const [origin, setOrigin] = useState('');
+
+  // Safely grabs your live website address only after the browser loads up
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setOrigin(window.location.origin);
+    }
+  }, []);
 
   const resolvedId = params?.id;
   const project = projects.find(p => 
@@ -45,10 +53,9 @@ export default function ProjectDetails() {
   
   if (!project) return notFound();
 
-  // Encodes your GLB URL into an interactive Google 3D viewer frame
-  const viewerUrl = typeof window !== 'undefined' 
-    ? `https://modelviewer.dev{window.location.origin}${project.glb}`
-    : '';
+  // Correctly formats the link text by combining your web domain and the video path
+  const fullGlbUrl = `${origin}${project.glb}`;
+  const viewerUrl = `https://3dviewer.net{encodeURIComponent(fullGlbUrl)}`;
 
   return (
     <div className="max-w-4xl mx-auto p-8 relative">
@@ -79,7 +86,7 @@ export default function ProjectDetails() {
       </a>
 
       {/* POP-UP OVERLAY MODAL */}
-      {isOpen && (
+      {isOpen && origin && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
           <div className="bg-white rounded-lg overflow-hidden w-full max-w-3xl relative shadow-2xl">
             
@@ -96,7 +103,7 @@ export default function ProjectDetails() {
               <h3 className="font-bold text-lg text-gray-800">3D Interactive Model: {project.name}</h3>
             </div>
 
-            {/* Standard iframe container that never breaks Next.js builds */}
+            {/* Interactive window frame */}
             <div className="w-full h-[500px] bg-gray-50">
               <iframe
                 src={viewerUrl}
