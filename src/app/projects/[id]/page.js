@@ -11,7 +11,7 @@ const projects = [
     image: "/images/MainPage_House.jpg",
     description: "Modern houses in the wood.",
     brochures: "/brochures/Google Map.pdf",
-    glb: "/videos/4669_3d_For_Website_2.glb"
+    glb: "/models/4669_3d_For_Website_2.glb" // Route updated to a standard static models folder
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const projects = [
     image: "/images/project2.jpg",
     description: "Luxury condos with sea view.",
     brochures: "/brochures/brochure2.pdf",
-    glb: "/videos/4669_3d_For_Website_2.glb"
+    glb: "/models/4669_3d_For_Website_2.glb" // Route updated to a standard static models folder
   },
   {
     id: 3,
@@ -29,13 +29,14 @@ const projects = [
     image: "/images/project3.jpg",
     description: "Exclusive villas on the hilltop.",
     brochures: "/brochures/brochure3.pdf",
-    glb: "/videos/4669_3d_For_Website_2.glb"
+    glb: "/models/4669_3d_For_Website_2.glb" // Route updated to a standard static models folder
   }
 ];
 
 export default function ProjectDetails() {
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
+  const [loadingError, setLoadingError] = useState("");
   const containerRef = useRef(null);
   const rendererRef = useRef(null);
 
@@ -56,6 +57,8 @@ export default function ProjectDetails() {
 
     const loadThreeJS = async () => {
       try {
+        setLoadingError(""); // Clear old errors
+
         if (!window.THREE) {
           await new Promise((resolve, reject) => {
             const script = document.createElement("script");
@@ -87,7 +90,7 @@ export default function ProjectDetails() {
         camera = new window.THREE.PerspectiveCamera(45, width / height, 0.1, 100);
         camera.position.set(0, 2, 5);
 
-        const ambientLight = new window.THREE.AmbientLight(0xffffff, 0.8);
+        const ambientLight = new window.THREE.AmbientLight(0xffffff, 0.9);
         scene.add(ambientLight);
         const directionalLight = new window.THREE.DirectionalLight(0xffffff, 0.6);
         directionalLight.position.set(5, 10, 7);
@@ -121,7 +124,10 @@ export default function ProjectDetails() {
             if (loadingText) loadingText.style.display = "none";
           },
           undefined,
-          (error) => console.error("Error loading model:", error)
+          (error) => {
+            console.error("Error loading model:", error);
+            if (isMounted) setLoadingError("Failed to fetch 3D file structure. Check filename casing.");
+          }
         );
 
         let isDragging = false;
@@ -164,6 +170,7 @@ export default function ProjectDetails() {
 
       } catch (err) {
         console.error("ThreeJS Loader failed:", err);
+        if (isMounted) setLoadingError("3D Graphics engine initiation failed.");
       }
     };
 
@@ -246,9 +253,15 @@ export default function ProjectDetails() {
               ref={containerRef}
               className="w-full h-[500px] bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative select-none cursor-grab active:cursor-grabbing"
             >
-              <div className="loading-indicator text-gray-500 text-sm animate-pulse">
-                Assembling Interactive Layout Mesh...
-              </div>
+              {loadingError ? (
+                <div className="text-red-500 text-sm font-medium px-4">
+                  ⚠️ {loadingError}
+                </div>
+              ) : (
+                <div className="loading-indicator text-gray-500 text-sm animate-pulse">
+                  Assembling Interactive Layout Mesh...
+                </div>
+              )}
             </div>
 
             <div className="mt-4 text-xs text-gray-500 text-left">
