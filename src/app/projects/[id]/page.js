@@ -10,7 +10,7 @@ const projects = [
     image: '/images/MainPage_House.jpg', 
     description: 'Modern houses in the wood.', 
     brochures: '/brochures/Google Map.pdf',
-    glb: '/videos/urbane_horizon.glb' 
+    glb: '/videos/4669_3d_For_Website_2.glb' 
   },
   { 
     id: 2, 
@@ -19,7 +19,7 @@ const projects = [
     image: '/images/project2.jpg', 
     description: 'Luxury condos with sea view.', 
     brochures: '/brochures/brochure2.pdf',
-    glb: '/videos/ocean_view.glb' 
+    glb: '/videos/4669_3d_For_Website_2.glb' 
   },
   { 
     id: 3, 
@@ -28,7 +28,7 @@ const projects = [
     image: '/images/project3.jpg', 
     description: 'Exclusive villas on the hilltop.', 
     brochures: '/brochures/brochure3.pdf',
-    glb: '/videos/the_villas.glb' 
+    glb: '/videos/4669_3d_For_Website_2s.glb' 
   },
 ];
 
