@@ -38,7 +38,7 @@ export default function ProjectDetails() {
   const [isOpen, setIsOpen] = useState(false);
   const [origin, setOrigin] = useState('');
 
-  // Safely grabs your live website address only after the browser loads up
+  // Safely grabs your live website address only after the browser mounts
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setOrigin(window.location.origin);
@@ -53,9 +53,13 @@ export default function ProjectDetails() {
   
   if (!project) return notFound();
 
-  // Correctly formats the link text by combining your web domain and the video path
-  const fullGlbUrl = `${origin}${project.glb}`;
-  const viewerUrl = `https://3dviewer.net{encodeURIComponent(fullGlbUrl)}`;
+  // Combines your web domain and the asset file into a valid internet link
+  const fullGlbUrl = origin ? origin + project.glb : '';
+  
+  // Connects to the engine by appending the model via a standard # hash parameter
+  const viewerUrl = origin 
+    ? `https://3dviewer.net{encodeURIComponent(fullGlbUrl)}`
+    : '';
 
   return (
     <div className="max-w-4xl mx-auto p-8 relative">
