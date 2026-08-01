@@ -16,8 +16,8 @@ export default function ProjectDetails() {
 
   const resolvedId = params ? params.id : "";
   const project = projects.find(p => p.id === parseInt(resolvedId, 10) || p.name.toLowerCase().replace(/\s+/g, "-") === resolvedId);
-  if (!project) return notFound();
 
+  // FIXED: Hook is now placed safely above the "notFound" return check
   useEffect(() => {
     if (!isOpen || !project?.glb || !window.THREE) return;
     let scene, camera, renderer, model, isMounted = true, isDragging = false, prevMouse = { x: 0, y: 0 };
@@ -90,9 +90,12 @@ export default function ProjectDetails() {
     };
   }, [isOpen, project]);
 
+  // The condition check is now placed cleanly down here below our React hooks
+  if (!project) return notFound();
+
   return (
     <div className="max-w-4xl mx-auto p-8 relative">
-      <button onClick={() => setIsOpen(true)} className="w-full focus:outline-none block text-left type=button">
+      <button onClick={() => setIsOpen(true)} className="w-full focus:outline-none block text-left" type="button">
         <img src={project.image} alt={project.name} className="w-full h-96 object-cover rounded cursor-pointer transition-all border-2 border-transparent hover:border-blue-500 hover:brightness-95" />
       </button>
       <h1 className="text-3xl font-bold mt-4">{project.name}</h1>
