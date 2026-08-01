@@ -11,7 +11,7 @@ const projects = [
     image: "/images/MainPage_House.jpg",
     description: "Modern houses in the wood.",
     brochures: "/brochures/Google Map.pdf",
-    glb: "/videos/4669_3d_For_Website_2.glb"
+    glb: "/videos/urbane_horizon.glb"
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const projects = [
     image: "/images/project2.jpg",
     description: "Luxury condos with sea view.",
     brochures: "/brochures/brochure2.pdf",
-    glb: "/videos/4669_3d_For_Website_2.glb"
+    glb: "/videos/ocean_view.glb"
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const projects = [
     image: "/images/project3.jpg",
     description: "Exclusive villas on the hilltop.",
     brochures: "/brochures/brochure3.pdf",
-    glb: "/videos/4669_3d_For_Website_2.glb"
+    glb: "/videos/the_villas.glb"
   }
 ];
 
@@ -48,7 +48,6 @@ export default function ProjectDetails() {
     return matchId || matchName;
   });
 
-  // Dynamically injects script sources sequentially on demand to completely isolate Webpack compilation
   useEffect(() => {
     if (!isOpen || !project?.glb) return;
 
@@ -57,7 +56,6 @@ export default function ProjectDetails() {
 
     const loadThreeJS = async () => {
       try {
-        // Step 1: Load Core Three.js library safely
         if (!window.THREE) {
           await new Promise((resolve, reject) => {
             const script = document.createElement("script");
@@ -68,7 +66,6 @@ export default function ProjectDetails() {
           });
         }
 
-        // Step 2: Load GLTFLoader library safely 
         if (!window.THREE.GLTFLoader) {
           await new Promise((resolve, reject) => {
             const script = document.createElement("script");
@@ -81,17 +78,15 @@ export default function ProjectDetails() {
 
         if (!isMounted || !containerRef.current) return;
 
-        // Step 3: Initialize 3D Engine Space Environment Layout
         const width = containerRef.current.clientWidth;
         const height = containerRef.current.clientHeight;
 
         scene = new window.THREE.Scene();
-        scene.background = new window.THREE.Color(0xf3f4f6); // Matching smooth gray background
+        scene.background = new window.THREE.Color(0xf3f4f6);
 
         camera = new window.THREE.PerspectiveCamera(45, width / height, 0.1, 100);
         camera.position.set(0, 2, 5);
 
-        // Studio lighting setups to make real estate assets pop
         const ambientLight = new window.THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
         const directionalLight = new window.THREE.DirectionalLight(0xffffff, 0.6);
@@ -104,7 +99,6 @@ export default function ProjectDetails() {
         containerRef.current.appendChild(renderer.domElement);
         rendererRef.current = renderer;
 
-        // Step 4: Asset parsing stream inside your local vercel pipeline
         const loader = new window.THREE.GLTFLoader();
         loader.load(
           project.glb,
@@ -112,7 +106,6 @@ export default function ProjectDetails() {
             if (!isMounted) return;
             model = gltf.scene;
             
-            // Auto-center and normalize size scaling perfectly
             const box = new window.THREE.Box3().setFromObject(model);
             const size = box.getSize(new window.THREE.Vector3());
             const maxDim = Math.max(size.x, size.y, size.z);
@@ -124,7 +117,6 @@ export default function ProjectDetails() {
             
             scene.add(model);
             
-            // Clear loading placeholder text
             const loadingText = containerRef.current.querySelector(".loading-indicator");
             if (loadingText) loadingText.style.display = "none";
           },
@@ -132,7 +124,6 @@ export default function ProjectDetails() {
           (error) => console.error("Error loading model:", error)
         );
 
-        // Mouse Drag Interaction Engine Logic variables
         let isDragging = false;
         let previousMousePosition = { x: 0, y: 0 };
 
@@ -152,12 +143,11 @@ export default function ProjectDetails() {
         domElement.addEventListener("mousemove", handleMouseMove);
         window.addEventListener("mouseup", handleMouseUp);
 
-        // Continuous Animation Loop Execution
         const animate = () => {
           if (!isMounted) return;
           requestAnimationFrame(animate);
           if (model && !isDragging) {
-            model.rotation.y += 0.003; // Smooth gentle automated auto-rotation
+            model.rotation.y += 0.003;
           }
           if (renderer && scene && camera) {
             renderer.render(scene, camera);
@@ -165,7 +155,6 @@ export default function ProjectDetails() {
         };
         animate();
 
-        // Cleanup Memory when user closes the modal popup box
         return () => {
           isMounted = false;
           domElement.removeEventListener("mousedown", handleMouseDown);
@@ -195,7 +184,6 @@ export default function ProjectDetails() {
 
   return (
     <div className="max-w-4xl mx-auto p-8 relative">
-      
       {/* CLICKABLE MAIN IMAGE */}
       {project.glb ? (
         <div className="relative group">
@@ -240,8 +228,6 @@ export default function ProjectDetails() {
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
           <div className="bg-white rounded-lg overflow-hidden w-full max-w-4xl relative shadow-2xl p-6 text-center border border-gray-200">
-            
-            {/* Close Button */}
             <button
               onClick={() => setIsOpen(false)}
               className="absolute top-4 right-4 z-50 bg-gray-200 hover:bg-gray-300 text-gray-800 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors"
@@ -250,14 +236,12 @@ export default function ProjectDetails() {
               x
             </button>
 
-            {/* Header Title */}
             <div className="border-b pb-3 mb-4 text-left">
               <h3 className="font-bold text-xl text-gray-900">
                 Interactive 3D View: {project.name}
               </h3>
             </div>
 
-            {/* Native Canvas Rendering Mount Node */}
             <div 
               ref={containerRef}
               className="w-full h-[500px] bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative select-none cursor-grab active:cursor-grabbing"
@@ -270,6 +254,9 @@ export default function ProjectDetails() {
             <div className="mt-4 text-xs text-gray-500 text-left">
               💡 Click and drag your mouse cursor directly across the model to rotate structural axes.
             </div>
-
           </div>
         </div>
+      )}
+    </div>
+  );
+}
