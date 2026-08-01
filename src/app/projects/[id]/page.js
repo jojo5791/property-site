@@ -1,3 +1,78 @@
+import { notFound } from "next/navigation";
+import ProjectImageModal from "./ProjectImageModal";
+
+const projects = [
+  {
+    id: 1,
+    name: "Urbane Horizon",
+    location: "Sitiawan",
+    image: "/images/MainPage_House.jpg",
+    description: "Modern houses in the wood.",
+    brochures: "/brochures/Google Map.pdf",
+    glb: "/videos/4669_3d_For_Website_2.glb"
+  },
+  {
+    id: 2,
+    name: "Ocean View Condos",
+    location: "Penang",
+    image: "/images/project2.jpg",
+    description: "Luxury condos with sea view.",
+    brochures: "/brochures/brochure2.pdf",
+    glb: "/videos/4669_3d_For_Website_2.glb"
+  },
+  {
+    id: 3,
+    name: "Hilltop Villas",
+    location: "Johor Bahru",
+    image: "/images/project3.jpg",
+    description: "Exclusive villas on the hilltop.",
+    brochures: "/brochures/brochure3.pdf",
+    glb: "/videos/4669_3d_For_Website_2.glb"
+  }
+];
+
+export default async function ProjectDetails({ params }) {
+  const resolvedParams = await params;
+  const resolvedId = resolvedParams ? resolvedParams.id : "";
+  
+  const project = projects.find((p) => {
+    if (!resolvedId) return false;
+    const matchId = p.id === parseInt(resolvedId, 10);
+    const matchName = p.name.toLowerCase().replace(/\s+/g, "-") === resolvedId;
+    return matchId || matchName;
+  });
+
+  if (!project) {
+    return notFound();
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto p-8 relative">
+      
+      {/* Renders the client-safe image wrapper component */}
+      <ProjectImageModal 
+        imageSrc={project.image}
+        projectName={project.name}
+        glbPath={project.glb}
+        brochurePath={project.brochures}
+      />
+
+      <h1 className="text-3xl font-bold mt-4">{project.name}</h1>
+      <p className="mt-2 text-gray-600">{project.location}</p>
+      <p className="mt-4">{project.description}</p>
+
+      <div className="mt-6">
+        <a
+          href={project.brochures}
+          download
+          className="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors"
+        >
+          Download Brochure
+        </a>
+      </div>
+    </div>
+  );
+}
 "use client";
 
 import { notFound, useParams } from "next/navigation";
