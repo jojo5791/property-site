@@ -1,3 +1,134 @@
+"use client";
+
+import { notFound, useParams } from "next/navigation";
+import { useState } from "react";
+
+const projects = [
+  {
+    id: 1,
+    name: "Urbane Horizon",
+    location: "Sitiawan",
+    image: "/images/MainPage_House.jpg",
+    description: "Modern houses in the wood.",
+    brochures: "/brochures/Google Map.pdf",
+    glb: "/videos/4669_3d_For_Website_2.glb"
+  },
+  {
+    id: 2,
+    name: "Ocean View Condos",
+    location: "Penang",
+    image: "/images/project2.jpg",
+    description: "Luxury condos with sea view.",
+    brochures: "/brochures/brochure2.pdf",
+    glb: "/videos/4669_3d_For_Website_2.glb"
+  },
+  {
+    id: 3,
+    name: "Hilltop Villas",
+    location: "Johor Bahru",
+    image: "/images/project3.jpg",
+    description: "Exclusive villas on the hilltop.",
+    brochures: "/brochures/brochure3.pdf",
+    glb: "/videos/4669_3d_For_Website_2.glb"
+  }
+];
+
+export default function ProjectDetails() {
+  const params = useParams();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const resolvedId = params ? params.id : "";
+  
+  const project = projects.find((p) => {
+    if (!resolvedId) return false;
+    const matchId = p.id === parseInt(resolvedId, 10);
+    const matchName = p.name.toLowerCase().replace(/\s+/g, "-") === resolvedId;
+    return matchId || matchName;
+  });
+
+  if (!project) {
+    return notFound();
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto p-8 relative">
+      {/* Clickable Image */}
+      {project.glb ? (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="w-full focus:outline-none block text-left"
+          type="button"
+        >
+          <img
+            src={project.image}
+            alt={project.name}
+            className="w-full h-96 object-cover rounded cursor-pointer hover:opacity-90 transition-opacity border-2 border-transparent hover:border-blue-500"
+          />
+        </button>
+      ) : (
+        <img
+          src={project.image}
+          alt={project.name}
+          className="w-full h-96 object-cover rounded"
+        />
+      )}
+
+      <h1 className="text-3xl font-bold mt-4">{project.name}</h1>
+      <p className="mt-2">{project.location}</p>
+      <p className="mt-4">{project.description}</p>
+
+      <a
+        href={project.brochures}
+        download
+        className="mt-4 inline-block bg-green-600 text-white px-4 py-2 rounded"
+      >
+        Download Brochure
+      </a>
+
+      {/* Pop-up Overlay Modal */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
+          <div className="bg-white rounded-lg overflow-hidden w-full max-w-3xl relative shadow-2xl p-6 text-center">
+            {/* Safe Close Button */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 z-50 bg-black bg-opacity-60 text-white hover:bg-opacity-80 w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl"
+              type="button"
+            >
+              x
+            </button>
+
+            {/* Header Text */}
+            <div className="bg-gray-100 p-4 border-b rounded-t-lg -mx-6 -mt-6 mb-6">
+              <h3 className="font-bold text-lg text-gray-800">
+                3D Asset: {project.name}
+              </h3>
+            </div>
+
+            {/* Container Box */}
+            <div className="w-full h-[400px] bg-gray-50 flex flex-col items-center justify-center rounded border border-dashed border-gray-300 p-8">
+              <div className="text-5xl mb-4">3D</div>
+              <h4 className="text-xl font-semibold text-gray-800 mb-2">
+                Open 3D Model
+              </h4>
+              <p className="text-gray-600 max-w-md mb-6 text-sm">
+                Click the action button below to load your asset model file.
+              </p>
+
+              <a
+                href={project.glb}
+                download
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded shadow transition-colors"
+              >
+                Download .GLB File
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 "use client"; 
 
 import { notFound, useParams } from 'next/navigation';
