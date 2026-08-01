@@ -1,7 +1,7 @@
 "use client";
 
 import { notFound, useParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const projects = [
   {
@@ -36,6 +36,8 @@ const projects = [
 export default function ProjectDetails() {
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef(null);
+  const rendererRef = useRef(null);
 
   const resolvedId = params ? params.id : "";
   
@@ -46,16 +48,150 @@ export default function ProjectDetails() {
     return matchId || matchName;
   });
 
+  // Dynamically injects script sources sequentially on demand to completely isolate Webpack compilation
+  useEffect(() => {
+    if (!isOpen || !project?.glb) return;
+
+    let isMounted = true;
+    let scene, camera, renderer, model;
+
+    const loadThreeJS = async () => {
+      try {
+        // Step 1: Load Core Three.js library safely
+        if (!window.THREE) {
+          await new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = "https://cloudflare.com";
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
+        }
+
+        // Step 2: Load GLTFLoader library safely 
+        if (!window.THREE.GLTFLoader) {
+          await new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = "https://jsdelivr.net";
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+          });
+        }
+
+        if (!isMounted || !containerRef.current) return;
+
+        // Step 3: Initialize 3D Engine Space Environment Layout
+        const width = containerRef.current.clientWidth;
+        const height = containerRef.current.clientHeight;
+
+        scene = new window.THREE.Scene();
+        scene.background = new window.THREE.Color(0xf3f4f6); // Matching smooth gray background
+
+        camera = new window.THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+        camera.position.set(0, 2, 5);
+
+        // Studio lighting setups to make real estate assets pop
+        const ambientLight = new window.THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+        const directionalLight = new window.THREE.DirectionalLight(0xffffff, 0.6);
+        directionalLight.position.set(5, 10, 7);
+        scene.add(directionalLight);
+
+        renderer = new window.THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        containerRef.current.appendChild(renderer.domElement);
+        rendererRef.current = renderer;
+
+        // Step 4: Asset parsing stream inside your local vercel pipeline
+        const loader = new window.THREE.GLTFLoader();
+        loader.load(
+          project.glb,
+          (gltf) => {
+            if (!isMounted) return;
+            model = gltf.scene;
+            
+            // Auto-center and normalize size scaling perfectly
+            const box = new window.THREE.Box3().setFromObject(model);
+            const size = box.getSize(new window.THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scale = 2.5 / maxDim;
+            model.scale.set(scale, scale, scale);
+            
+            const center = box.getCenter(new window.THREE.Vector3());
+            model.position.sub(center.multiplyScalar(scale));
+            
+            scene.add(model);
+            
+            // Clear loading placeholder text
+            const loadingText = containerRef.current.querySelector(".loading-indicator");
+            if (loadingText) loadingText.style.display = "none";
+          },
+          undefined,
+          (error) => console.error("Error loading model:", error)
+        );
+
+        // Mouse Drag Interaction Engine Logic variables
+        let isDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+
+        const handleMouseDown = () => { isDragging = true; };
+        const handleMouseMove = (e) => {
+          const deltaMove = { x: e.offsetX - previousMousePosition.x, y: e.offsetY - previousMousePosition.y };
+          if (isDragging && model) {
+            model.rotation.y += deltaMove.x * 0.007;
+            model.rotation.x += deltaMove.y * 0.007;
+          }
+          previousMousePosition = { x: e.offsetX, y: e.offsetY };
+        };
+        const handleMouseUp = () => { isDragging = false; };
+
+        const domElement = renderer.domElement;
+        domElement.addEventListener("mousedown", handleMouseDown);
+        domElement.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseup", handleMouseUp);
+
+        // Continuous Animation Loop Execution
+        const animate = () => {
+          if (!isMounted) return;
+          requestAnimationFrame(animate);
+          if (model && !isDragging) {
+            model.rotation.y += 0.003; // Smooth gentle automated auto-rotation
+          }
+          if (renderer && scene && camera) {
+            renderer.render(scene, camera);
+          }
+        };
+        animate();
+
+        // Cleanup Memory when user closes the modal popup box
+        return () => {
+          isMounted = false;
+          domElement.removeEventListener("mousedown", handleMouseDown);
+          domElement.removeEventListener("mousemove", handleMouseMove);
+          window.removeEventListener("mouseup", handleMouseUp);
+        };
+
+      } catch (err) {
+        console.error("ThreeJS Loader failed:", err);
+      }
+    };
+
+    loadThreeJS();
+
+    return () => {
+      isMounted = false;
+      if (rendererRef.current && rendererRef.current.domElement) {
+        rendererRef.current.dispose();
+        rendererRef.current.domElement.remove();
+      }
+    };
+  }, [isOpen, project]);
+
   if (!project) {
     return notFound();
   }
-
-  // Uses a fully isolated sandbox rendering link that bypasses all script security blockers
-  const safe3DViewerUrl = project.glb 
-    ? `https://babylonjs.com{encodeURIComponent(
-        typeof window !== "undefined" ? window.location.origin + project.glb : ""
-      )}`
-    : "";
 
   return (
     <div className="max-w-4xl mx-auto p-8 relative">
@@ -74,7 +210,7 @@ export default function ProjectDetails() {
               className="w-full h-96 object-cover rounded cursor-pointer transition-all border-2 border-transparent hover:border-blue-500 hover:brightness-95"
             />
             <div className="absolute bottom-4 right-4 bg-black bg-opacity-75 text-white px-3 py-1.5 rounded text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-              🔍 Click to interact in 3D
+              🏢 Click to interact in 3D
             </div>
           </button>
         </div>
@@ -121,23 +257,19 @@ export default function ProjectDetails() {
               </h3>
             </div>
 
-            {/* Sandboxed 3D Viewer Frame */}
-            <div className="w-full h-[550px] bg-gray-100 rounded-lg overflow-hidden">
-              <iframe
-                src={safe3DViewerUrl}
-                title="3D Interactive Real Estate Engine"
-                className="w-full h-full border-none"
-                allow="autoplay; fullscreen; xr-spatial-tracking"
-              />
+            {/* Native Canvas Rendering Mount Node */}
+            <div 
+              ref={containerRef}
+              className="w-full h-[500px] bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative select-none cursor-grab active:cursor-grabbing"
+            >
+              <div className="loading-indicator text-gray-500 text-sm animate-pulse">
+                Assembling Interactive Layout Mesh...
+              </div>
             </div>
 
             <div className="mt-4 text-xs text-gray-500 text-left">
-              💡 Left-click and drag your mouse to rotate your building layout inside the engine panel.
+              💡 Click and drag your mouse cursor directly across the model to rotate structural axes.
             </div>
 
           </div>
         </div>
-      )}
-    </div>
-  );
-}
