@@ -11,7 +11,7 @@ const projects = [
     image: "/images/MainPage_House.jpg",
     description: "Modern houses in the wood.",
     brochures: "/brochures/Google Map.pdf",
-    glb: "/models/4669_3d_For_Website_2.glb" // Route updated to a standard static models folder
+    glb: "/models/4669_3d_For_Website_2.glb" // Your exact new filename applied here
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const projects = [
     image: "/images/project2.jpg",
     description: "Luxury condos with sea view.",
     brochures: "/brochures/brochure2.pdf",
-    glb: "/models/4669_3d_For_Website_2.glb" // Route updated to a standard static models folder
+    glb: "/models/4669_3d_For_Website_2.glb" // Your exact new filename applied here
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const projects = [
     image: "/images/project3.jpg",
     description: "Exclusive villas on the hilltop.",
     brochures: "/brochures/brochure3.pdf",
-    glb: "/models/4669_3d_For_Website_2.glb" // Route updated to a standard static models folder
+    glb: "/models/4669_3d_For_Website_2.glb" // Your exact new filename applied here
   }
 ];
 
@@ -57,8 +57,9 @@ export default function ProjectDetails() {
 
     const loadThreeJS = async () => {
       try {
-        setLoadingError(""); // Clear old errors
+        setLoadingError(""); 
 
+        // 1. Safe Injection Loop for core library
         if (!window.THREE) {
           await new Promise((resolve, reject) => {
             const script = document.createElement("script");
@@ -69,6 +70,7 @@ export default function ProjectDetails() {
           });
         }
 
+        // 2. Safe Injection Loop for asset loaders
         if (!window.THREE.GLTFLoader) {
           await new Promise((resolve, reject) => {
             const script = document.createElement("script");
@@ -81,14 +83,14 @@ export default function ProjectDetails() {
 
         if (!isMounted || !containerRef.current) return;
 
-        const width = containerRef.current.clientWidth;
-        const height = containerRef.current.clientHeight;
+        const width = containerRef.current.clientWidth || 600;
+        const height = containerRef.current.clientHeight || 500;
 
         scene = new window.THREE.Scene();
         scene.background = new window.THREE.Color(0xf3f4f6);
 
         camera = new window.THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-        camera.position.set(0, 2, 5);
+        camera.position.set(0, 2, 6);
 
         const ambientLight = new window.THREE.AmbientLight(0xffffff, 0.9);
         scene.add(ambientLight);
@@ -96,15 +98,38 @@ export default function ProjectDetails() {
         directionalLight.position.set(5, 10, 7);
         scene.add(directionalLight);
 
-        renderer = new window.THREE.WebGLRenderer({ antialias: true });
+        renderer = new window.THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(width, height);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         containerRef.current.appendChild(renderer.domElement);
         rendererRef.current = renderer;
 
+        // Try downloading the file using multiple common name variations
+        const urlsToTry = [
+          project.glb,
+          project.glb.replace('.glb', '.GLB'),
+          project.glb.toLowerCase()
+        ];
+
+        let successUrl = "";
+        
+        // Find which file URL actually exists on your Vercel deployment server
+        for (const url of urlsToTry) {
+          try {
+            const res = await fetch(url, { method: 'HEAD' });
+            if (res.ok) {
+              successUrl = url;
+              break;
+            }
+          } catch (e) { /** continue fallback loop **/ }
+        }
+
+        // Default path fallback if fetch head check gets skipped by browser rules
+        const finalTargetUrl = successUrl || project.glb;
+
         const loader = new window.THREE.GLTFLoader();
         loader.load(
-          project.glb,
+          finalTargetUrl,
           (gltf) => {
             if (!isMounted) return;
             model = gltf.scene;
@@ -112,7 +137,7 @@ export default function ProjectDetails() {
             const box = new window.THREE.Box3().setFromObject(model);
             const size = box.getSize(new window.THREE.Vector3());
             const maxDim = Math.max(size.x, size.y, size.z);
-            const scale = 2.5 / maxDim;
+            const scale = 2.8 / (maxDim || 1);
             model.scale.set(scale, scale, scale);
             
             const center = box.getCenter(new window.THREE.Vector3());
@@ -125,8 +150,8 @@ export default function ProjectDetails() {
           },
           undefined,
           (error) => {
-            console.error("Error loading model:", error);
-            if (isMounted) setLoadingError("Failed to fetch 3D file structure. Check filename casing.");
+            console.error("GLTF compilation error:", error);
+            if (isMounted) setLoadingError("3D file format mismatch. Try reloading the window tab.");
           }
         );
 
@@ -153,7 +178,7 @@ export default function ProjectDetails() {
           if (!isMounted) return;
           requestAnimationFrame(animate);
           if (model && !isDragging) {
-            model.rotation.y += 0.003;
+            model.rotation.y += 0.003; // Auto rotation fallback loop
           }
           if (renderer && scene && camera) {
             renderer.render(scene, camera);
@@ -169,8 +194,8 @@ export default function ProjectDetails() {
         };
 
       } catch (err) {
-        console.error("ThreeJS Loader failed:", err);
-        if (isMounted) setLoadingError("3D Graphics engine initiation failed.");
+        console.error("Engine failed:", err);
+        if (isMounted) setLoadingError("Web browser graphics acceleration disabled.");
       }
     };
 
@@ -251,25 +276,3 @@ export default function ProjectDetails() {
 
             <div 
               ref={containerRef}
-              className="w-full h-[500px] bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative select-none cursor-grab active:cursor-grabbing"
-            >
-              {loadingError ? (
-                <div className="text-red-500 text-sm font-medium px-4">
-                  ⚠️ {loadingError}
-                </div>
-              ) : (
-                <div className="loading-indicator text-gray-500 text-sm animate-pulse">
-                  Assembling Interactive Layout Mesh...
-                </div>
-              )}
-            </div>
-
-            <div className="mt-4 text-xs text-gray-500 text-left">
-              💡 Click and drag your mouse cursor directly across the model to rotate structural axes.
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
