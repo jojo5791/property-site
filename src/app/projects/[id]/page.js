@@ -1,4 +1,7 @@
-import { notFound } from "next/navigation";
+"use client";
+
+import { notFound, useParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
 const projects = [
   {
@@ -30,9 +33,25 @@ const projects = [
   }
 ];
 
-export default async function ProjectDetails({ params }) {
-  const resolvedParams = await params;
-  const resolvedId = resolvedParams ? resolvedParams.id : "";
+export default function ProjectDetails() {
+  const params = useParams();
+  const [isOpen, setIsOpen] = useState(false);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
+  // Safely registers the 3D viewer library on the client side to bypass webpack build traps
+  useEffect(() => {
+    if (typeof window !== "undefined" && !window.customElements.get("model-viewer")) {
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = "https://googleapis.com";
+      script.onload = () => setScriptLoaded(true);
+      document.head.appendChild(script);
+    } else {
+      setScriptLoaded(true);
+    }
+  }, []);
+
+  const resolvedId = params ? params.id : "";
   
   const project = projects.find((p) => {
     if (!resolvedId) return false;
@@ -45,23 +64,30 @@ export default async function ProjectDetails({ params }) {
     return notFound();
   }
 
+  // Alias name to safely mount custom 3D element tags
+  const ModelViewerContainer = "model-viewer";
+
   return (
     <div className="max-w-4xl mx-auto p-8 relative">
-      {/* Clicking the image opens the GLB file seamlessly in a fresh tab */}
+      
+      {/* CLICKABLE MAIN IMAGE */}
       {project.glb ? (
-        <a 
-          href={project.glb} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          title="Click to view 3D Model"
-          className="block w-full border-2 border-transparent hover:border-blue-500 rounded overflow-hidden transition-all duration-200"
-        >
-          <img
-            src={project.image}
-            alt={project.name}
-            className="w-full h-96 object-cover cursor-pointer hover:brightness-95 transition-all"
-          />
-        </a>
+        <div className="relative group">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="w-full focus:outline-none block text-left"
+            type="button"
+          >
+            <img
+              src={project.image}
+              alt={project.name}
+              className="w-full h-96 object-cover rounded cursor-pointer transition-all border-2 border-transparent hover:border-blue-500 hover:brightness-95"
+            />
+            <div className="absolute bottom-4 right-4 bg-black bg-opacity-75 text-white px-3 py-1.5 rounded text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+              🔍 Click to interact in 3D
+            </div>
+          </button>
+        </div>
       ) : (
         <img
           src={project.image}
@@ -83,6 +109,53 @@ export default async function ProjectDetails({ params }) {
           Download Brochure
         </a>
       </div>
+
+      {/* INTERACTIVE POP-UP OVERLAY MODAL */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4">
+          <div className="bg-white rounded-lg overflow-hidden w-full max-w-3xl relative shadow-2xl p-6 text-center border border-gray-200">
+            
+            {/* Close Button */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 z-50 bg-gray-200 hover:bg-gray-300 text-gray-800 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors"
+              type="button"
+            >
+              x
+            </button>
+
+            {/* Header Title Text */}
+            <div className="border-b pb-3 mb-4 text-left">
+              <h3 className="font-bold text-xl text-gray-900">
+                Interactive 3D View: {project.name}
+              </h3>
+            </div>
+
+            {/* 3D Model Rendering Window */}
+            <div className="w-full h-[500px] bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative">
+              {scriptLoaded ? (
+                <ModelViewerContainer
+                  src={project.glb}
+                  alt={`3D design model of ${project.name}`}
+                  auto-rotate=""
+                  camera-controls=""
+                  touch-action="pan-y"
+                  style={{ width: "100%", height: "100%", outline: "none", display: "block" }}
+                />
+              ) : (
+                <div className="text-gray-500 text-sm animate-pulse">
+                  Loading 3D Engine Architecture...
+                </div>
+              )}
+            </div>
+
+            <div className="mt-4 text-xs text-gray-500 text-left">
+              💡 Left-click and drag your mouse to rotate. Use your scroll wheel to zoom.
+            </div>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 }
