@@ -48,12 +48,19 @@ export default function ProjectDetails() {
 
   return (
     <div className="max-w-4xl mx-auto p-8 relative">
-      <button onClick={() => setIsOpen(true)} className="w-full focus:outline-none block text-left" type="button">
+      <button onClick={() => setIsOpen(true)} className="w-full focus:outline-none block text-left relative group" type="button">
         <img
           src={project.image}
           alt={project.name}
-          className="w-full h-96 object-cover rounded cursor-pointer transition-all border-2 border-transparent hover:border-blue-500 hover:brightness-95"
+          className="w-full h-96 object-cover rounded cursor-pointer transition-all border-2 border-transparent group-hover:border-blue-500 group-hover:brightness-95"
         />
+        <span className="absolute bottom-4 right-4 bg-black/70 text-white text-sm font-medium px-4 py-2 rounded-full flex items-center gap-2 shadow-lg transition-transform group-hover:scale-105">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 010 18 15 15 0 010-18z" />
+          </svg>
+          Click to view in 3D
+        </span>
       </button>
       <h1 className="text-3xl font-bold mt-4">{project.name}</h1>
       <p className="mt-2 text-gray-600">{project.location}</p>
